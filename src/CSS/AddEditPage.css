@@ -1,0 +1,138 @@
+.addeditpagemaincontainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.addeditpagebodysection {
+    display: flex;
+    margin: 0 auto;
+    width: 50vw;
+    margin-top: 10vh;
+    gap: 90px;
+}
+
+.addeditpageleftsection,
+.addeditpagerightsection {
+    display: flex;
+    flex-direction: column;
+    gap: 45px;
+    width: 40%;
+}
+
+.addeditpagerightsection {
+    width: 35%;
+}
+
+.addeditformitem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.addeditformitem input,
+select {
+    width: 60%;
+}
+
+
+.addeditformcheckboxlistcontainer {
+    width: 60%;
+}
+
+.addeditformcheckboxitem {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.addeditformcheckboxitem input {
+    width: auto;
+}
+
+.addeditformcheckboxitem label {
+    font-weight: 400;
+}
+
+.addeditformitem input:focus,
+select:focus {
+    border-color: #13b375;
+}
+
+input[type="checkbox"],input[type="radio"] {
+    accent-color: #02a366;
+}
+
+.addeditformitem input,
+select {
+    border: 2px solid #000;
+    padding: 10px;
+    outline: none;
+    transition: .3s;
+    background-color: white;
+}
+
+.addeditformitem textarea {
+    resize: none;
+    background-color: white;
+    border: 2px solid #000;
+    padding: 10px;
+    outline: none;
+    transition: .3s;
+}
+
+.addeditformitem textarea:focus {
+    border-color: #13b375;
+}
+
+.addeditformradioitem {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.addeditformradioitemcontainer {
+    width: 63%;
+    display: flex;
+    gap: 40px;
+}
+
+.addeditformradioitemcontainer input {
+    width: auto;
+}
+
+.addeditformradioitem label {
+    font-size: .8rem;
+}
+
+.addeditformbuttonsection {
+    margin-top: 13vh;
+    display: flex;
+    /* gap: 8vw; */
+    justify-content: space-between;
+}
+
+.addeditformbuttonsection button {
+    padding: 10px 50px;
+    /* width: 30%; */
+    cursor: pointer;
+    font-weight: 600;
+}
+
+@media screen and (max-width: 1000px) {
+    .addeditpagebodysection {
+        flex-direction: column;
+        width: auto;
+        gap: 30px;
+    }
+
+    .addeditpageleftsection,
+    .addeditpagerightsection {
+        width: auto;
+        gap: 30px;
+    }
+
+    .addeditformbuttonsection {
+        margin-top: auto;
+    }
+}

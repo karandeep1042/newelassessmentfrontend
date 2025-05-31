@@ -1,0 +1,193 @@
+.listpagemaincontainer {
+    width: 100%;
+}
+
+body {
+    background-color: #f0f0f0;
+}
+
+.listpageheader {
+    background-color: black;
+    color: #FFF;
+    padding: 5px 10px;
+}
+
+.listpageheadersection {
+    padding-top: 20px;
+    border-bottom: 2px solid #000;
+}
+
+.listpageaddnewbuttoncontainer {
+    padding: 30px 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.listpageaddnewbuttoncontainer button {
+    padding: 10px 40px;
+    background-color: transparent;
+    border: 2px solid black;
+    color: black;
+    cursor: pointer;
+    font-weight: 600;
+    transition: .3s;
+}
+
+.listpageaddnewbuttoncontainer button:hover {
+    border: 2px solid #13b375;
+    color: #13b375;
+}
+
+.listpagefiltersection {
+    padding: 40px 20px;
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+.listpagefiltersection label {
+    /* font-size: .9rem; */
+    color: rgb(105, 105, 105);
+    font-weight: 600;
+}
+
+.listpagesearchbarcontainer {
+    display: flex;
+    /* gap: 20px; */
+    align-items: center;
+}
+
+.listpagesearchbarcontainer i {
+    font-size: 1rem;
+    color: white;
+    height: 100%;
+    background-color: black;
+    padding: 10px;
+    padding-top: 11px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+
+.listpagesearchbarcontainer input {
+    border: none;
+    padding: 9px;
+    outline: none;
+    transition: .3s;
+    border-left: 2px solid black;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+}
+
+.listpagesearchbarcontainer input:focus {
+    padding: 9px;
+    border-left: 2px solid #13b375;
+    border-top: 2px solid #13b375;
+    border-bottom: 2px solid #13b375;
+}
+
+.listpagetablesection {
+    padding: 0px 20px;
+}
+
+.listpagetableheader {
+    color: rgb(105, 105, 105);
+    font-weight: 600;
+}
+
+.listpagetablecontainer {
+    margin-top: 20px;
+}
+
+
+.listpagetablecontainer th,
+table,
+td {
+    border: 1px solid rgb(58, 58, 58);
+}
+
+.listpagetablecontainer th {
+    background-color: black;
+    color: white;
+    font-size: .8rem;
+    padding: 10px 40px;
+}
+
+.listpagetablecontainer td {
+    text-align: center;
+    background-color: white;
+    font-size: .8rem;
+}
+
+.tableaction {
+    display: flex;
+    gap: 60px;
+    justify-content: center;
+    padding: 8px 40px;
+}
+
+.tableaction i {
+    cursor: pointer;
+    font-size: 1.3rem;
+    color: #666673;
+    transition: .5s;
+}
+
+.tableaction i:hover {
+    color: #13b375;
+}
+
+#updatebtn {
+    border:2px solid #13b375;
+    color: #13b375;
+    background-color: transparent;
+    transition: .3s;
+}
+
+#savebtn {
+    border:2px solid #616161;
+    color: #616161;
+    background-color: transparent;
+    transition: .3s;
+}
+
+#updatebtn:hover {
+    border:2px solid #078656;
+    color: #078656;
+}
+
+#savebtn:hover {
+    border:2px solid #000000;
+    color: #000000;
+}
+
+#backbtn:hover {
+    border:2px solid #b30707;
+    color: #b30707;
+}
+
+#backbtn {
+    border:2px solid #f10e0e;
+    color: #f10e0e;
+    transition: .3s;
+    background-color: transparent;
+}
+
+@media screen and (max-width: 870px) {
+    .listpagetablesection {
+        padding: 0 20px;
+    }
+
+    .listpagetablecontainer th {
+        padding: 10px 0;
+    }
+
+    .tableaction {
+        padding: 8px 10px;
+        gap: 10px;
+    }
+
+    .listpagesearchbarcontainer i{
+        padding-top: 13px;
+    }
+}
