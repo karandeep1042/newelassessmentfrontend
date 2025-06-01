@@ -1,10 +1,26 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,CSSProperties,useState } from 'react'
 import '../CSS//AddEditPage.css'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer, Bounce } from 'react-toastify';
+import { RiseLoader } from "react-spinners";
+
+const override: CSSProperties = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    display: "block",
+    margin: "0 auto",
+    zIndex: "10",
+    borderColor: "red",
+};
 
 function AddEditPage() {
+    
+    let [loading, setLoading] = useState(false);
+    let color = "#13b375";
+
     const isUpdate = useSelector((state) => state.ID.isUpdate);
     const isOnlyRead = useSelector((state) => state.ID.isOnlyRead);
     const eid = useSelector((state) => state.ID.staffId);
@@ -55,6 +71,7 @@ function AddEditPage() {
     }
 
     const addnewstaff = async (data) => {
+        setLoading(true);
         let res = await fetch("https://newelassessmentbackend.onrender.com/addstaff", {
             method: "POST",
             body: JSON.stringify(data),
@@ -65,7 +82,7 @@ function AddEditPage() {
         })
 
         res = await res.json();
-
+        setLoading(false);
         if (res.msg === "usercreated") {
             toast.success("Employee created Successfully");
             toast.info("You will be redirected to List page in few seconds");
@@ -78,6 +95,7 @@ function AddEditPage() {
     }
 
     const updatestaff = async (data) => {
+        setLoading(true);
         data.id = eid;
         let res = await fetch("https://newelassessmentbackend.onrender.com/updatestaff", {
             method: "POST",
@@ -89,7 +107,7 @@ function AddEditPage() {
         })
 
         res = await res.json();
-
+        setLoading(false);
         if (res.msg === "userupdated") {
             toast.success("Employee updated Successfully");
         } else {
@@ -98,12 +116,13 @@ function AddEditPage() {
     }
 
     const fetchemployeedetail = async () => {
+        setLoading(true);
         const input = document.getElementsByClassName('addeditforminput');
         const cb = document.querySelectorAll('input[type="checkbox"]');
         const rb = document.querySelectorAll('input[type="radio"]');
         let res = await fetch(`https://newelassessmentbackend.onrender.com/getemployee/${eid}`);
         res = await res.json();
-
+        setLoading(false);
         if (res.msg === "datafetched") {
             input[0].value = res.data.ename;
             input[1].value = res.data.edpartment;
@@ -127,91 +146,102 @@ function AddEditPage() {
     }, []);
 
     return (
-        <div className='addeditpagemaincontainer'>
-            <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick={false}
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-                transition={Bounce}
+        <>
+            {loading && <div className="overlay"></div>}
+            <RiseLoader
+                color={color}
+                loading={loading}
+                cssOverride={override}
+                size={30}
+                aria-label="Loading Spinner"
+                data-testid="loader"
             />
-            <div className="listpageheadersection">
-                <div className="listpageheader">
-                    <h3>Add-Edit Page</h3>
+            <div className='addeditpagemaincontainer'>
+                <ToastContainer
+                    position="top-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick={false}
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                    transition={Bounce}
+                />
+                <div className="listpageheadersection">
+                    <div className="listpageheader">
+                        <h3>Add-Edit Page</h3>
+                    </div>
                 </div>
-            </div>
-            <div className="addeditpagebodysection">
-                <div className="addeditpageleftsection">
-                    <div className="addeditformitem">
-                        <label htmlFor="addeditformname">Name: </label>
-                        <input type="text" id='name' style={{borderColor:isOnlyRead?"rgb(187 187 187)":null}} disabled={isOnlyRead ? true : false} className='addeditforminput' />
-                    </div>
-                    <div className="addeditformitem">
-                        <label htmlFor="addeditformdepartment">Department: </label>
-                        <select name="addeditformdepartment" disabled={isOnlyRead ? true : false} id="" style={{borderColor:isOnlyRead?"rgb(187 187 187)":null}} className='addeditforminput' >
-                            <option value="">Select...</option>
-                            <option value="IT">IT</option>
-                            <option value="Sales">Sales</option>
-                            <option value="HR">HR</option>
-                        </select>
-                    </div>
-                    <div className="addeditformitem">
-                        <label htmlFor="addeditformdate">Date of Joining: </label>
-                        <input type="date" name="addeditformdate" style={{borderColor:isOnlyRead?"rgb(187 187 187)":null}} disabled={isOnlyRead ? true : false} id="" className='addeditforminput' />
-                    </div>
-                    <div className="addeditformitem">
-                        <label htmlFor="addeditformdate">Hobbies: </label>
-                        <div className="addeditformcheckboxlistcontainer">
-                            <div className="addeditformcheckboxitem">
-                                <input type="checkbox" name="reading" id="" value="reading" className='addeditformcbinput' disabled={isOnlyRead ? true : false} />
-                                <label htmlFor="reading">Reading</label>
-                            </div>
-                            <div className="addeditformcheckboxitem">
-                                <input type="checkbox" name="swimming" id="" value="swimming" className='addeditformcbinput' disabled={isOnlyRead ? true : false} />
-                                <label htmlFor="swimming">Swimming</label>
-                            </div>
-                            <div className="addeditformcheckboxitem">
-                                <input type="checkbox" name="playing" id="" value="playing" className='addeditformcbinput' disabled={isOnlyRead ? true : false} />
-                                <label htmlFor="playing">Playing</label>
-                            </div>
-                            <div className="addeditformcheckboxitem">
-                                <input type="checkbox" name="singing" id="" value="singing" className='addeditformcbinput' disabled={isOnlyRead ? true : false} />
-                                <label htmlFor="singing">Singing</label>
+                <div className="addeditpagebodysection">
+                    <div className="addeditpageleftsection">
+                        <div className="addeditformitem">
+                            <label htmlFor="addeditformname">Name: </label>
+                            <input type="text" id='name' style={{ borderColor: isOnlyRead ? "rgb(187 187 187)" : null }} disabled={isOnlyRead ? true : false} className='addeditforminput' />
+                        </div>
+                        <div className="addeditformitem">
+                            <label htmlFor="addeditformdepartment">Department: </label>
+                            <select name="addeditformdepartment" disabled={isOnlyRead ? true : false} id="" style={{ borderColor: isOnlyRead ? "rgb(187 187 187)" : null }} className='addeditforminput' >
+                                <option value="">Select...</option>
+                                <option value="IT">IT</option>
+                                <option value="Sales">Sales</option>
+                                <option value="HR">HR</option>
+                            </select>
+                        </div>
+                        <div className="addeditformitem">
+                            <label htmlFor="addeditformdate">Date of Joining: </label>
+                            <input type="date" name="addeditformdate" style={{ borderColor: isOnlyRead ? "rgb(187 187 187)" : null }} disabled={isOnlyRead ? true : false} id="" className='addeditforminput' />
+                        </div>
+                        <div className="addeditformitem">
+                            <label htmlFor="addeditformdate">Hobbies: </label>
+                            <div className="addeditformcheckboxlistcontainer">
+                                <div className="addeditformcheckboxitem">
+                                    <input type="checkbox" name="reading" id="" value="reading" className='addeditformcbinput' disabled={isOnlyRead ? true : false} />
+                                    <label htmlFor="reading">Reading</label>
+                                </div>
+                                <div className="addeditformcheckboxitem">
+                                    <input type="checkbox" name="swimming" id="" value="swimming" className='addeditformcbinput' disabled={isOnlyRead ? true : false} />
+                                    <label htmlFor="swimming">Swimming</label>
+                                </div>
+                                <div className="addeditformcheckboxitem">
+                                    <input type="checkbox" name="playing" id="" value="playing" className='addeditformcbinput' disabled={isOnlyRead ? true : false} />
+                                    <label htmlFor="playing">Playing</label>
+                                </div>
+                                <div className="addeditformcheckboxitem">
+                                    <input type="checkbox" name="singing" id="" value="singing" className='addeditformcbinput' disabled={isOnlyRead ? true : false} />
+                                    <label htmlFor="singing">Singing</label>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="addeditpagerightsection">
-                    <div className="addeditformitem">
-                        <label htmlFor="addeditformaddress">Address: </label>
-                        <textarea name="addeditformaddress" style={{borderColor:isOnlyRead?"rgb(187 187 187)":null}} id="" rows={6} cols={25} className='addeditforminput' disabled={isOnlyRead ? true : false} ></textarea>
-                    </div>
-                    <div className="addeditformitem">
-                        <label htmlFor="addeditformgender">Gender: </label>
-                        <div className="addeditformradioitemcontainer">
-                            <div className="addeditformradioitem">
-                                <input type="radio" name="addeditformgender" value="male" className='addeditformrbinput' disabled={isOnlyRead ? true : false} />
-                                <label htmlFor="">Male</label>
-                            </div>
-                            <div className="addeditformradioitem">
-                                <input type="radio" name="addeditformgender" value="female" className='addeditformrbinput' disabled={isOnlyRead ? true : false} />
-                                <label htmlFor="">Female</label>
+                    <div className="addeditpagerightsection">
+                        <div className="addeditformitem">
+                            <label htmlFor="addeditformaddress">Address: </label>
+                            <textarea name="addeditformaddress" style={{ borderColor: isOnlyRead ? "rgb(187 187 187)" : null }} id="" rows={6} cols={25} className='addeditforminput' disabled={isOnlyRead ? true : false} ></textarea>
+                        </div>
+                        <div className="addeditformitem">
+                            <label htmlFor="addeditformgender">Gender: </label>
+                            <div className="addeditformradioitemcontainer">
+                                <div className="addeditformradioitem">
+                                    <input type="radio" name="addeditformgender" value="male" className='addeditformrbinput' disabled={isOnlyRead ? true : false} />
+                                    <label htmlFor="">Male</label>
+                                </div>
+                                <div className="addeditformradioitem">
+                                    <input type="radio" name="addeditformgender" value="female" className='addeditformrbinput' disabled={isOnlyRead ? true : false} />
+                                    <label htmlFor="">Female</label>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="addeditformbuttonsection">
-                        {isOnlyRead ? <button onClick={() => { navigate('/listpage') }} id='backbtn'>Back</button> : <>{isUpdate ? <button id='updatebtn' onClick={() => { validateCredentials() }} >Update</button> : <button id='savebtn' onClick={() => { validateCredentials() }} >Save</button>}
-                            <button onClick={() => { navigate('/listpage') }} id='backbtn'>Back</button></>}
+                        <div className="addeditformbuttonsection">
+                            {isOnlyRead ? <button onClick={() => { navigate('/listpage') }} id='backbtn'>Back</button> : <>{isUpdate ? <button id='updatebtn' onClick={() => { validateCredentials() }} >Update</button> : <button id='savebtn' onClick={() => { validateCredentials() }} >Save</button>}
+                                <button onClick={() => { navigate('/listpage') }} id='backbtn'>Back</button></>}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 
